@@ -1,0 +1,75 @@
+---
+import { getLangFromUrl } from '@i18n/utils';
+import { languages } from '@i18n/ui';
+import langRedirectScript from '@utils/langRedirect.js?raw';
+import faviconScript from '@utils/favicon_color.js?raw';
+const supportedLangs = Object.keys(languages);
+
+import Footer from '@common/footer.astro';
+import Header from '@common/header.astro';
+
+import "@styles/global.css";
+
+const lang = getLangFromUrl(Astro.url);
+---
+
+<!doctype html>
+<html lang={lang} data-supported-langs={JSON.stringify(supportedLangs)}>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width" />
+        
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+        
+		<meta name="generator" content={Astro.generator} />
+        <title>Mirko Pardini</title>
+		
+
+    </head>
+    <body class="bg-white">
+		
+		<!-- script to detect the browser's language -->
+        <script is:inline set:html={langRedirectScript} />
+        <Header/>		
+        	<slot/>
+        <Footer/>
+    </body>
+</html>
+
+
+
+<script>
+
+	// per il fade devi aggiungere queste classi all-elemento da fade-are [ fade-item transition-all duration-900 opacity-0 translate-y-10 ]
+	window.addEventListener('load', () => {
+	  const fadeItems = document.querySelectorAll('.fade-item');
+	  
+	  const observer = new IntersectionObserver((entries) => {
+		entries.forEach(entry => {
+		  if (entry.target instanceof HTMLElement) {
+			const direction = entry.target.dataset.direction;
+			if (entry.isIntersecting) {
+			  // Fade in: rimuove le classi iniziali e applica lo stato finale
+			  entry.target.classList.remove('opacity-0', 'translate-y-10', '-translate-y-10');
+			  entry.target.classList.add('opacity-100', 'translate-y-0');
+			} else {
+			  // Fade out: rimuove lo stato "visibile" e ripristina le classi iniziali
+			  entry.target.classList.remove('opacity-100', 'translate-y-0');
+			  entry.target.classList.add('opacity-0');
+			  if (direction === 'su') {
+				entry.target.classList.add('translate-y-10');
+			  } else if (direction === 'giu') {
+				entry.target.classList.add('-translate-y-10');
+			  }
+			}
+		  }
+		});
+	  }, { threshold: 0.2 });
+	  
+	  fadeItems.forEach(item => {
+		observer.observe(item);
+	  });
+	});
+
+  </script>

@@ -1,0 +1,64 @@
+---
+import { getLangFromUrl,useTranslations } from "@i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+import MapImage from "@img/map.png";
+---
+
+<div class="w-full md:w-1/2 lg:w-2/3 bg-gray-200 rounded-lg overflow-hidden sm:mr-10 p-0 flex items-end justify-start relative h-[500px]">
+  <!-- Mappa statica caricata localmente (senza cookie) -->
+  <div
+    class="absolute inset-0 w-full h-full"
+  >
+    <img
+      src={MapImage.src}
+      alt="Mappa di TEC Systems Engineering srl"
+      class="w-full h-full object-cover"
+      draggable="false"
+    />
+    <div
+      class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+    >
+      <div class="relative">
+        <div
+          class="w-8 h-8 bg-orange-500 rounded-full border-4 border-white shadow-lg animate-bounce"
+        >
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="absolute bottom-0 left-0 right-0 bg-white/90 p-4 m-4 rounded-lg shadow-md z-10 max-w-md"
+  >
+    <h3 class="font-semibold mb-1">TEC Systems Engineering srl</h3>
+    <p class="text-gray-600 text-sm mb-2">
+      {t('contact_us.address.2')}
+      
+    </p>
+    <a
+      href="https://www.google.com/maps/dir/?api=1&destination=45.418485510720686,11.91894292831421"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="text-orange-600 hover:text-orange-700 text-sm inline-flex items-center"
+    >
+      <span>{ t('map.directions') || "Indicazioni stradali" }</span>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-4 w-4 ml-1"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"
+        ></path>
+      </svg>
+    </a>
+  </div>
+</div>

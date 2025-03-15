@@ -1,0 +1,56 @@
+---
+import { getLangFromUrl, useTranslations, } from "@i18n/utils"; 
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+import img1 from "@passions/desktop.png";
+import img2 from "@passions/gym.png";
+
+interface Interface {
+  title: string;
+  desc: string;
+  class1: string;
+  class2: string;
+  image: string;
+}
+
+const passions: Interface[] = [
+  { title: t("passions.subtitle.1") || "", desc: t("passions.desc.1") || "", class1: "hover:bg-blue-50" , class2: "bg-blue-100", image: img1.src },
+  { title: t("passions.subtitle.2") || "", desc: t("passions.desc.2") || "", class1: "hover:bg-green-50", class2: "bg-green-100", image: img2.src }
+  
+];
+---
+<section class="bg-white p-12 rounded-3xl shadow-2xl max-w-6xl mx-auto" x-data>
+  <div class="space-y-10">
+   
+    <!-- title + payoff -->
+    <div class="text-center mb-12">
+      <h2 class="text-4xl font-extrabold text-gray-900 mb-4">{ t("passions.title") || "" }</h2>
+      <p class="text-lg text-gray-700 leading-relaxed max-w-4xl mx-auto">
+        { t("passions.payoff") || "" }
+      </p>
+    </div>
+
+    <!-- passions div -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {passions.map((item) => (
+        <div class={`${item.class1} group flex items-start space-x-6 p-8 bg-gray-50 rounded-2xl transition-all duration-300 transform hover:-translate-y-2`}>
+          <div class={`${item.class2} p-4 rounded-xl shrink-0`}>
+            <img
+              src={item.image}
+              alt="icon"
+              class="w-[64px] h-[64px] object-contain transition duration-300 transform group-hover:scale-110"
+              draggable="false"
+            />
+          </div>
+          <div class="flex-1">
+            <h3 class="text-xl font-bold text-gray-900 mb-3">{item.title}</h3>
+            <p class="text-gray-700 text-base leading-relaxed">{item.desc}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+
+  </div>
+</section>

@@ -1,0 +1,99 @@
+---
+import { getLangFromUrl, useTranslations } from "@i18n/utils"; 
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+import img1 from "@projects/tecsen.png";
+import img2 from "@projects/tmacs.png";
+import img3 from "@projects/safetygo.png";
+
+
+
+interface Project {
+  title: string;
+  description: string;
+  tags: string[];
+  image: string;
+  liveUrl: string;
+  codeUrl: string;
+}
+
+const projects: Project[] = [
+  { title: "Tecsen Website",    description: t("projects.desc.1") as string, tags: ["Astro", "Tailwind CSS", "Alpine"], image: img1.src, liveUrl: "#", codeUrl: "#" },
+  { title: "Tmacs Website",     description: t("projects.desc.2") as string, tags: ["Astro", "Tailwind CSS", "Alpine"], image: img2.src, liveUrl: "#", codeUrl: "#" },
+  { title: "Safety-Go website", description: t("projects.desc.3") as string, tags: ["Astro", "Tailwind CSS", "Alpine"], image: img3.src, liveUrl: "#", codeUrl: "#" }
+];
+
+
+const floatingAnimation = "animate-float";
+---
+<section class="relative min-h-screen bg-white overflow-hidden">
+  <!-- Sfondo animato -->
+  <div class="absolute inset-0 z-0">
+    <div class={`absolute w-96 h-96 bg-gradient-to-b from-blue-100 to-cyan-100 rounded-full blur-3xl opacity-30 mix-blend-multiply ${floatingAnimation} -top-24 -right-48`}></div>
+    <div class={`absolute w-96 h-96 bg-gradient-to-r from-green-100 to-emerald-100 rounded-full blur-3xl opacity-30 mix-blend-multiply animation-delay-2000 ${floatingAnimation} bottom-48 left-1/4`}></div>
+  </div>
+
+  <div class="relative z-10 container mx-auto px-4 py-20">
+    <h2 class="text-4xl md:text-5xl font-bold text-gray-800 mb-12 text-center">I miei progetti</h2>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {projects.map(project => (
+        <article class="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 ease-in-out transform hover:-translate-y-2 hover:scale-105">
+          <div class="h-48 bg-gray-100 rounded-t-2xl overflow-hidden">
+            <img 
+              src={project.image} 
+              alt={project.title}
+              class="w-full h-full object-cover object-top transition-transform duration-300 ease-in-out group-hover:-translate-y-2"
+              loading="lazy"
+            />
+          </div>
+          
+          <div class="p-6">
+            <h3 class="text-xl font-semibold text-gray-800 mb-2 transition-transform duration-300 ease-in-out group-hover:-translate-y-1">
+              {project.title}
+            </h3>
+            <p class="text-gray-600 mb-4">{project.description}</p>
+            
+            <div class="flex flex-wrap gap-2 mb-4">
+              {project.tags.map(tag => (
+                <span class="px-3 py-1 bg-gray-100 text-gray-600 rounded-full text-sm">
+                  {tag}
+                </span>
+              ))}
+            </div>
+            
+            <div class="flex gap-3">
+              <a 
+                href={project.liveUrl} target="_blank"
+                class="flex-1 text-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+              >
+                Live Demo
+              </a>
+              <a 
+                href={project.codeUrl} target="_blank"
+                class="flex-1 text-center px-4 py-2 border-2 border-gray-300 text-gray-600 rounded-lg hover:border-blue-600 hover:text-blue-600 transition-colors"
+              >
+                { t("projects.button.code") || "Code" }
+              </a>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style is:global>
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+  }
+  .animate-float {
+    animation: float 8s ease-in-out infinite;
+  }
+  .animation-delay-2000 {
+    animation-delay: 2s;
+  }
+</style>

@@ -1,0 +1,196 @@
+---
+import { getLangFromUrl, useTranslations, useTranslatedPath } from "@i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+const translatePath = useTranslatedPath(lang);
+
+import LanguagePicker from "@parts/language_picker.astro";
+
+const headerItems = [
+  { title: t("header.about") || "About", link: translatePath("/#about-me") },
+  { title: t("header.projects") || "Projects", link: translatePath("/#projects") },
+  { title: t("header.services") || "Services", link: translatePath("/#services") },
+  { title: t("header.blog") || "Blog", link: translatePath("/#passions") },
+  { title: t("header.contact") || "Contact me", link: translatePath("/#contact_us") },
+  { title: t("header.download_cv") || "cv", link: translatePath("/#contact_us") },
+];
+---
+
+<!-- Modifica la classe dell'header -->
+<header
+  id="header"
+  class="header-transition text-black fixed top-0 left-0 w-full z-50 font-bold py-5 backdrop-blur-sm bg-transparent opacity-100"
+>
+
+<nav class="container mx-auto flex justify-between items-center pt-4 p-4">
+  <a href={translatePath("/")} class="flex items-center gap-3 h-[35px]">
+    <!-- Testo al posto dell'immagine -->
+    <span class="text-lg font-bold transition-all duration-300">
+        Mirko Pardini
+    </span>
+</a>
+
+
+  <!-- desktop only menu -->
+    <ul class="hidden lg:flex space-x-6 items-center">
+      {
+        headerItems.map((item) => (
+          <li class="relative group">
+            <a
+              href={item.link}
+              class="relative font-bold transition-all duration-300 py-1"
+            >
+            {/* transition-all duration-300 makes item's logo switch from black to white cleaner */}
+              {item.title}
+              <span class="absolute w-0 h-[2px] bg-current transition-all duration-300 group-hover:w-full right-0 top-0 " />
+              <span class="absolute w-0 h-[2px] bg-current transition-all duration-300 group-hover:w-full left-0  bottom-0 " />
+            </a>
+          </li>
+        ))
+      }
+      <!-- <LanguagePicker/> -->
+    </ul>
+
+    <!-- hamburger button displayed only on mobile + tablet -->
+    <button
+      id="hamburger-button"
+      class="lg:hidden text-gray-700 focus:outline-none"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        class="h-8 w-8"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+        stroke-width="2"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="M4 6h16M4 12h16M4 18h16"></path>
+      </svg>
+    </button>
+  </nav>
+
+  <!-- mobile's menu -->
+  <div id="mobile-menu" class="h-screen hidden lg:hidden bg-white">
+    <ul class="flex flex-col items-center space-y-4 p-4">
+      {
+        headerItems.map((item) => (
+          <li>
+            <a href={item.link} class="mobile-link">
+              {item.title}
+            </a>
+          </li>
+        ))
+      }
+      <!-- <LanguagePicker/> -->
+    </ul>
+  </div>
+</header>
+
+<script>
+  // script to make the hamburger appear
+  document.addEventListener("DOMContentLoaded", function () {
+    const hamburgerButton = document.getElementById("hamburger-button");
+    const mobileMenu = document.getElementById("mobile-menu");
+    const mobileLinks = document.querySelectorAll(".mobile-link");
+
+    if (hamburgerButton && mobileMenu) {
+      hamburgerButton.addEventListener("click", () => {
+        mobileMenu.classList.toggle("hidden");
+      });
+    }
+    mobileLinks.forEach((link) => {
+      link.addEventListener("click", () => {
+        if (mobileMenu) {
+          mobileMenu.classList.add("hidden");
+        }
+      });
+    });
+  });
+
+</script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const header = document.getElementById("header");
+    let lastScroll = 0;
+    const scrollThreshold = 200; // Scroll minimo prima che inizi l'animazione
+    const animationDuration = 500; // Durata animazione in ms
+
+    window.addEventListener("scroll", () => {
+      if (!header) return;
+
+      const currentScroll = window.pageYOffset;
+      const scrollDirection = currentScroll > lastScroll ? 'down' : 'up';
+      const scrollDelta = currentScroll - lastScroll;
+
+      // Calcola la distanza di scroll effettiva (escludendo il threshold)
+      const effectiveScroll = Math.max(currentScroll - scrollThreshold, 0);
+      const maxTranslation = header.offsetHeight * 1.2; // Traduzione massima
+
+      // Calcola la percentuale di animazione
+      const animationProgress = Math.min(effectiveScroll / 100, 1); // 100px dopo il threshold
+
+      if (currentScroll > scrollThreshold && scrollDirection === 'down') {
+        header.style.opacity = (1 - animationProgress).toString();
+        header.style.transform = `translateY(-${maxTranslation * animationProgress}px)`;
+      } else {
+        header.style.opacity = '1';
+        header.style.transform = 'translateY(0)';
+      }
+
+      lastScroll = currentScroll <= 0 ? 0 : currentScroll;
+    });
+  });
+</script>
+
+<script>
+  // script to make header change from trasparent to white
+  document.addEventListener("DOMContentLoaded", function () {
+    const heroSection = document.getElementById('hero');
+    const headerElement = document.getElementById('header');
+    const error_page = document.getElementById('404');
+    const logoImage = document.getElementById('logo');
+    const languages_arrow = document.getElementById('languages-arrow');
+
+    if (!error_page && heroSection && headerElement) {
+      const observerOptions = {
+        root: null,
+        rootMargin: '0px 0px -90% 0px', // Modificato per trigger più preciso
+        threshold: 0
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            headerElement.classList.remove('bg-white');
+            headerElement.classList.add('backdrop-blur-sm', 'bg-transparent');
+            logoImage?.classList.remove('invert');
+            languages_arrow?.classList.remove('invert');
+          } else {
+            headerElement.classList.add('bg-white');
+            headerElement.classList.remove('backdrop-blur-sm', 'bg-transparent');
+            logoImage?.classList.add('invert');
+            languages_arrow?.classList.add('invert');
+          }
+        });
+      }, observerOptions);
+
+      observer.observe(heroSection);
+    }
+  });
+</script>
+
+<style>
+  .header-transition {
+    transition: 
+      opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+      transform 0.6s cubic-bezier(0.4, 0, 0.2, 1),
+      background-color 0.5s ease,
+      backdrop-filter 0.5s ease;
+    will-change: transform, opacity;
+  }
+</style>

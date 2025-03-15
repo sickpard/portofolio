@@ -1,0 +1,53 @@
+---
+import { getLangFromUrl, useTranslations } from "@i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+import Layout from "@layouts/Layout.astro";
+
+import Hero from "@components/hero.astro";
+import About from "@components/about.astro";
+import Projects from "@components/projects.astro";
+import Passions from "@components/passions.astro";
+import Map from "@components/map.astro";
+import ContactUs from "@components/contact_us.astro";
+
+import TopButton from "@parts/top_button.astro";
+import TitleDesc from "@parts/title_desc.astro";
+import SideBar from "@parts/sidebar.astro";
+---
+
+<Layout>
+  <!-- go back to the top of the page button + side bar buttons -->
+  <TopButton/>
+  <SideBar/>
+
+  <!-- hero Section -->
+  <section id="hero" class="min-h-screen flex flex-col justify-center items-center relative overflow-hidden">
+    <Hero/>
+  </section>
+
+  <!-- about me Section -->
+  <section id="about-me" class="py-20 bg-gray-800">
+    <About/>
+  </section>
+
+  <!-- projects section -->
+  <section id="projects" class="scroll-mt-27 container mx-auto py-10 px-0 md:px-0 mt-20">
+    <Projects>
+  </section>
+
+  <!-- passions section parla di cio che ti piace esperienze lav e corsi in una pag a parte -->
+  <section id="passions" class="scroll-mt-27 bg-cover bg-center py-10 h-auto flex items-center">
+        <Passions/>
+  </section>
+
+  <!-- contact me section -->
+  <section
+  id="contact_us"
+  class="scroll-mt-27 body-font relative h-auto"
+  > 
+    <ContactUs/>
+  </section>
+</Layout>

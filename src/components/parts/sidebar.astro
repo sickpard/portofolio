@@ -1,0 +1,60 @@
+---
+import { getLangFromUrl, useTranslations } from "@i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const sections = [
+  { id: "aboutUS", label: t("sidebar.about") || "Chi siamo" },
+  { id: "system_components", label: t("sidebar.projects") || "Componenti del sistema" },
+  { id: "advantages", label: t("sidebar.services") || "Vantaggi" },
+  { id: "contact_us", label: t("sidebar.blog") || "Contattaci" },
+  { id: "contact_us", label: t("sidebar.contact") || "Contattaci" }
+];
+---
+
+<div class="fixed right-2 md:right-4 top-1/2 -translate-y-1/2 flex flex-col gap-3 md:gap-4 z-50">
+  {sections.map((section) => (
+    <div class="group relative flex items-center">
+      <span class="absolute right-full mr-2 px-2 py-1 rounded bg-gray-600 text-white text-sm opacity-0 group-hover:opacity-100 transition-opacity duration-200 hidden md:block">
+        {section.label}
+      </span>
+      <a
+        href={`#${section.id}`}
+        data-section={section.id}
+        class="nav-dot w-2 h-2 md:w-4 md:h-4 rounded-full border-2 border-gray-600 bg-[#f8941d] hover:bg-orange-400 hover:scale-110 transition-all duration-300 cursor-pointer"
+      />
+    </div>
+  ))}
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const sections = document.querySelectorAll("section[id]");
+    const navDots = document.querySelectorAll(".nav-dot");
+
+    const observerOptions = {
+      rootMargin: "-20% 0px -20% 0px",
+      threshold: 0.1,
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const activeId = entry.target.getAttribute("id");
+          navDots.forEach((dot) => {
+            if (dot.getAttribute("data-section") === activeId) {
+              dot.classList.remove("bg-[#f8941d]");
+              dot.classList.add("bg-orange-700", "scale-110");
+            } else {
+              dot.classList.remove("bg-orange-700", "scale-110");
+              dot.classList.add("bg-[#f8941d]");
+            }
+          });
+        }
+      });
+    }, observerOptions);
+
+    sections.forEach((section) => observer.observe(section));
+  });
+</script>

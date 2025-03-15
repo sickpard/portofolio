@@ -1,0 +1,41 @@
+---
+import { getLangFromUrl, useTranslations } from "@i18n/utils"; 
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const title = t("global.name") || "Mirko Pardini";
+
+const content = [
+  { profession: t("hero.profession.1") },
+  { profession: t("hero.profession.2") },
+  { profession: t("hero.profession.3") },
+];
+---
+<!-- Background Animato -->
+<div class="absolute inset-0 z-0">
+  <div class="animate-float bg-gradient-to-r from-purple-500 to-pink-500 w-64 h-64 rounded-full blur-3xl opacity-30"></div>
+  <div class="animate-float-delay bg-gradient-to-r from-blue-500 to-teal-500 w-64 h-64 rounded-full blur-3xl opacity-30"></div>
+</div>
+
+<!-- Contenuto Principale -->
+<div class="z-10 text-center">
+  <h1 class="text-6xl md:text-8xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-400 animate-fade-in">
+    {title}
+  </h1>
+  <p class="mt-4 text-xl text-gray-300 animate-fade-in-delay">
+    
+    {content.map((item, index) => (
+      <>
+        {index > 0 && " | "}
+        <span>{item.profession}</span>
+        
+      </>
+    ))}
+  </p>
+  <a href="#about-me" class="mt-8 inline-block px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-lg hover:from-pink-500 hover:to-purple-500 transition-all duration-300 animate-bounce">
+    { t("hero.more") || "More"}
+  </a>
+</div>
+
+

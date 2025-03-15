@@ -1,0 +1,86 @@
+---
+import { getLangFromUrl, useTranslations } from "@i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const skills = [
+  { title: t('about.skills.backend') || "Backend", options: [
+      { subtitle: t('about.skills.backend.1') || "PHP"  },
+      { subtitle: t('about.skills.backend.2') || "Java" }
+    ] 
+  },
+
+  { title: t('about.skills.frontend') || "Frontend", options: [
+      { subtitle: t('about.skills.frontend.1') || "HTML"  },
+      { subtitle: t('about.skills.frontend.2') || "CSS" }
+    ] 
+  },
+
+  { title: t('about.skills.database') || "Database", options: [
+      { subtitle: t('about.skills.database.1') || "SQL"  },
+    ] 
+  },
+
+  { title: t('about.skills.framework') || "Framework", options: [
+      { subtitle: t('about.skills.framework.1') || "CodeIgniter"  },
+      { subtitle: t('about.skills.framework.2') || "Laravel"  },
+      { subtitle: t('about.skills.framework.3') || "Angular"  },
+      { subtitle: t('about.skills.framework.4') || "Astro"  },
+      { subtitle: t('about.skills.framework.5') || "Tailwind CSS"  },
+      { subtitle: t('about.skills.framework.6') || "Alpine" },
+      { subtitle: t('about.skills.framework.7') || "JQuery"  }
+    ] 
+  },
+];
+---
+<div class="container mx-auto px-4">
+  <!-- about me -->
+  <h2 class="text-4xl font-bold text-center text-white">About Me</h2>
+  <div class="mt-8 max-w-2xl mx-auto text-gray-300">
+    <p class="mb-4">
+      { t('about.predesc.1') || "Ciao! 👋 Sono" } <strong class="text-purple-400">{ t('global.name') || "Mirko Pardini" }</strong>{ t('about.predesc.2') || ", uno sviluppatore web con una forte passione per il backend, specialmente con PHP, e un'attenzione particolare alla creazione di esperienze utente intuitive e performanti." }
+    </p>
+    <p class="mb-4">
+      { t('about.desc.1') || "La mia specialità è" } <strong class="text-blue-400">PHP</strong>{ t('about.desc.1') || ", un linguaggio che padroneggio da anni e che mi ha permesso di costruire applicazioni robuste, scalabili e sicure." }
+    </p>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+
+      <!-- Sezione "Cosa so fare?" -->
+      <div class="p-4 bg-gray-700 rounded-lg">
+        <h3 class="text-xl font-semibold text-purple-400">Cosa so fare?</h3>
+        <ul class="mt-2 list-disc list-inside">
+          {skills.map((item, index) => (
+            <li>
+              <strong>{item.title}:</strong> 
+              {item.options.map((option, i) => (
+                <span>
+                  {i > 0 && " | "} {option.subtitle}
+                </span>
+              ))}
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- sezione, perche amo quello che faccio -->
+      <div class="p-4 bg-gray-700 rounded-lg">
+        <h3 class="text-xl font-semibold text-blue-400">Perché amo quello che faccio?</h3>
+        <p class="mt-2">
+          { t('about.slogan') || "La programmazione per me è come risolvere un puzzle: ogni problema ha una soluzione, e trovare quella giusta è sempre una soddisfazione." }
+        </p>
+      </div>
+
+      <!-- sezione collab -->
+      <div class="col-span-1 md:col-span-2 text-center mt-6">
+        <p>
+          { t('about.talk_with_me.1') || "Se hai un'idea o un progetto in mente," } 
+          <a href="#contact" class="text-purple-400 hover:text-pink-400 transition-all">
+            { t('about.talk_with_me.2') || "adorerei parlarne insieme!" } 
+          </a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

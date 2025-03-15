@@ -1,0 +1,115 @@
+@import "tailwindcss";
+
+html { scroll-behavior: smooth; }
+
+@theme {
+    --coloreBianco: #F0EDEE;
+    --coloreNero: #141414;
+    --coloreNeroChiaro: #333333;
+    --coloreArancione: #f8941d;
+    
+}
+
+.bg-bianco { background-color: var(--coloreBianco); }
+.bg-nero { background-color: var(--coloreNero); }
+.bg-neroChiaro { background-color: var(--coloreNeroChiaro); }
+.bg-arancione { background-color: var(--coloreArancione); }
+
+.text-bianco { color: var(--coloreBianco); }
+.text-nero { color: var(--coloreNero); }
+.text-neroChiaro { color: var(--coloreNeroChiaro); }
+.text-arancione { color: var(--coloreArancione); }
+
+@font-face {
+  font-family: 'pirulen';
+  src: url('/fonts/pirulen_rg.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+
+.font-pirulen {
+  font-family: 'pirulen', sans-serif;
+}
+
+
+.scrollbar-custom::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  .scrollbar-custom::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+  }
+  
+  .scrollbar-custom::-webkit-scrollbar-thumb {
+    background: #596881;
+    border-radius: 10px;
+    border: 2px solid #f1f1f1;
+  }
+  
+  .scrollbar-custom::-webkit-scrollbar-thumb:hover {
+    background: #314879;
+  }
+  
+  /* Per Firefox */
+  .scrollbar-custom {
+    scrollbar-width: thin;
+    scrollbar-color: #596881 #f1f1f1;
+  }
+
+
+
+  /* =============================================== */
+
+
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-20px);
+    }
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  @keyframes bounce {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+  
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+  
+  .animate-float-delay {
+    animation: float 6s ease-in-out infinite;
+    animation-delay: 3s;
+  }
+  
+  .animate-fade-in {
+    animation: fadeIn 1.5s ease-out;
+  }
+  
+  .animate-fade-in-delay {
+    animation: fadeIn 1.5s ease-out 0.5s;
+  }
+  
+  .animate-bounce {
+    animation: bounce 2s infinite;
+  }

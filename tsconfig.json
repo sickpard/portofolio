@@ -1,0 +1,38 @@
+{
+  "extends": "astro/tsconfigs/strict",
+  "include": [".astro/types.d.ts", "**/*"],
+  "exclude": ["dist"],
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@img/*": ["src/assets/img/*"],
+      "@icons/*": ["src/assets/img/icons/*"],
+      "@system_components/*": ["src/assets/img/system_components/*"],
+      "@advantages/*": ["src/assets/img/advantages/*"],
+      
+      "@servicesIMG/*": ["src/assets/img/services/*"],
+      "@flags/*": ["src/assets/img/flags/*"],
+      "@skills/*": ["src/assets/img/skills/*"],
+      "@we_offer/*": ["src/assets/img/we_offer/*"],
+      "@weWork/*": ["src/assets/img/WeWork/*"],
+      "@partner/*": ["src/assets/img/partner/*"],
+      "@social/*": ["src/assets/img/social/*"],
+      "@loghi/*": ["src/assets/img/loghi/*"],
+      
+      "@passions/*": ["src/assets/img/passions/*"],
+      "@projects/*": ["src/assets/img/projects/*"],
+
+      "@components/*": ["src/components/*"],
+      "@common/*": ["src/components/common/*"],
+      "@parts/*": ["src/components/parts/*"],
+      
+      "@layouts/*": ["src/layouts/*"],
+
+      "@utils/*": ["src/utils/*"],
+
+      "@styles/*": ["src/styles/*"],
+
+      "@i18n/*": ["src/i18n/*"]
+    }
+  }
+}

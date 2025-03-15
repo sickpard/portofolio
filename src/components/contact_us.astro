@@ -1,0 +1,65 @@
+---
+import { getLangFromUrl, useTranslations } from "@i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+import ContactForm from "@parts/contact_form.astro";
+
+import img1 from "@social/email.png";
+import img2 from "@social/linkedin.png";
+
+const email = "pardinimirko02@gmail.com";
+---
+
+<section id="contatti" class="py-16 px-4 max-w-4xl mx-auto">
+  <h2 class="text-3xl font-bold text-center mb-8 text-indigo-600">Contattami</h2>
+
+  <div class="grid md:grid-cols-2 gap-8 mb-12">
+    <!-- Contatti diretti -->
+    <div class="space-y-6">
+      <div>
+        <a 
+          href="mailto:tua@email.com" 
+          class="flex items-center gap-4 hover:text-indigo-600 transition-colors"
+          x-data="{ hover: false }"
+          @mouseenter="hover = true"
+          @mouseleave="hover = false"
+        >
+        <img
+          src={img1.src}
+          alt="icon"
+          class="w-[24px] h-[24px] object-contain transition duration-300 transform group-hover:scale-110"
+          draggable="false"
+        />
+        <span class="text-lg"> { email } </span>
+      </a>
+      </div>
+
+      <div>
+        <a 
+        href="https://linkedin.com/in/tuo-profilo" 
+        target="_blank"
+        class="flex items-center gap-4 hover:text-indigo-600 transition-colors"
+        x-data="{ hover: false }"
+        @mouseenter="hover = true"
+        @mouseleave="hover = false"
+      >
+        <img
+          src={img2.src}
+          alt="icon"
+          class="w-[24px] h-[24px] object-contain transition duration-300 transform group-hover:scale-110"
+          draggable="false"
+        />
+        <span class="text-lg">LinkedIn</span>
+      </a>
+      </div>
+    </div>
+
+    <!-- Form contatto -->
+    <ContactForm/>
+  </div>
+</section>
+
+<!-- Assicurati di includere Alpine.js nel tuo layout -->
+<script defer src="//unpkg.com/alpinejs" crossorigin="anonymous"></script>
