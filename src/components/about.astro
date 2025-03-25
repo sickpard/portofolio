@@ -4,83 +4,115 @@ import { getLangFromUrl, useTranslations } from "@i18n/utils";
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
+// Importa tutte le icone
+const icons = {
+  php: await import("@skills/php.png"),
+  laravel: await import("@skills/laravel.png"),
+  codeIgniter: await import("@skills/codeIgniter.png"),
+  java: await import("@skills/java.png"),
+  html: await import("@skills/html.png"),
+  css: await import("@skills/css.png"),
+  tailwind: await import("@skills/tailwind.png"),
+  angular: await import("@skills/angular.png"),
+  astro: await import("@skills/astra.png"),
+  alpine: await import("@skills/alpine.png"),
+  jquery: await import("@skills/jquery.png"),
+  sql: await import("@skills/mysql.png"),
+};
+
+// Configurazione competenze
 const skills = [
-  { title: t('about.skills.backend') || "Backend", options: [
-      { subtitle: t('about.skills.backend.1') || "PHP"  },
-      { subtitle: t('about.skills.backend.2') || "Java" }
-    ] 
+  {
+    id: "backend", 
+    title: "Backend",
+    items: [
+      { key: "php", icon: icons.php },
+      { key: "java", icon: icons.java },
+      { key: "laravel", icon: icons.laravel },
+      { key: "codeIgniter", icon: icons.codeIgniter },
+    ]
   },
-
-  { title: t('about.skills.frontend') || "Frontend", options: [
-      { subtitle: t('about.skills.frontend.1') || "HTML"  },
-      { subtitle: t('about.skills.frontend.2') || "CSS" }
-    ] 
+  {
+    id: "frontend",
+    title: "Frontend",
+    items: [
+      { key: "html", icon: icons.html },
+      { key: "css", icon: icons.css },
+      { key: "tailwind", icon: icons.tailwind },
+      { key: "angular", icon: icons.angular },
+      { key: "alpine", icon: icons.alpine },
+      { key: "jquery", icon: icons.jquery },
+      { key: "astro", icon: icons.astro },
+    ]
   },
-
-  { title: t('about.skills.database') || "Database", options: [
-      { subtitle: t('about.skills.database.1') || "SQL"  },
-    ] 
-  },
-
-  { title: t('about.skills.framework') || "Framework", options: [
-      { subtitle: t('about.skills.framework.1') || "CodeIgniter"  },
-      { subtitle: t('about.skills.framework.2') || "Laravel"  },
-      { subtitle: t('about.skills.framework.3') || "Angular"  },
-      { subtitle: t('about.skills.framework.4') || "Astro"  },
-      { subtitle: t('about.skills.framework.5') || "Tailwind CSS"  },
-      { subtitle: t('about.skills.framework.6') || "Alpine" },
-      { subtitle: t('about.skills.framework.7') || "JQuery"  }
-    ] 
-  },
+  {
+    id: "database",
+    title: "Database",
+    items: [
+      { key: "sql", icon: icons.sql },
+    ]
+  }
 ];
 ---
-<div class="container mx-auto px-4">
-  <!-- about me -->
-  <h2 class="text-4xl font-bold text-center text-white">About Me</h2>
-  <div class="mt-8 max-w-2xl mx-auto text-gray-300">
-    <p class="mb-4">
-      { t('about.predesc.1') || "Ciao! 👋 Sono" } <strong class="text-purple-400">{ t('global.name') || "Mirko Pardini" }</strong>{ t('about.predesc.2') || ", uno sviluppatore web con una forte passione per il backend, specialmente con PHP, e un'attenzione particolare alla creazione di esperienze utente intuitive e performanti." }
-    </p>
-    <p class="mb-4">
-      { t('about.desc.1') || "La mia specialità è" } <strong class="text-blue-400">PHP</strong>{ t('about.desc.1') || ", un linguaggio che padroneggio da anni e che mi ha permesso di costruire applicazioni robuste, scalabili e sicure." }
-    </p>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+<div class="container mx-auto px-4 py-12">
+  <!-- Header -->
+  <div class="text-center mb-12">
+    <h2 class="text-4xl font-bold text-gray-800 mb-4">{t('about.title') || "About Me"}</h2>
+    <p class="text-gray-600 max-w-2xl mx-auto">
+      {t('about.predesc.1') || "Ciao! 👋 Sono"} 
+      <strong class="text-purple-600">{t('global.name') || "Mirko Pardini"}</strong>
+      {t('about.predesc.2') || ", specialista backend PHP con una passione per soluzioni scalabili e performanti."}
+    </p>
+  </div>
 
-      <!-- Sezione "Cosa so fare?" -->
-      <div class="p-4 bg-gray-700 rounded-lg">
-        <h3 class="text-xl font-semibold text-purple-400">Cosa so fare?</h3>
-        <ul class="mt-2 list-disc list-inside">
-          {skills.map((item, index) => (
-            <li>
-              <strong>{item.title}:</strong> 
-              {item.options.map((option, i) => (
-                <span>
-                  {i > 0 && " | "} {option.subtitle}
-                </span>
-              ))}
-            </li>
+  <!-- Competenze -->
+  <div class="grid md:grid-cols-2 gap-8 mb-12">
+    {skills.map(skills => (
+      <div class="bg-white p-6 rounded-xl shadow-lg border border-gray-100">
+        <h3 class="text-purple-600 text-xl font-bold mb-4">
+          {skills.title}
+        </h3>
+        
+        <div class="flex flex-wrap gap-3">
+          {skills.items.map(item => (
+            <div class="skill-item">
+              <img
+                src={item.icon.default.src}
+                alt={item.key}
+                class="w-6 h-6 object-contain"
+                draggable="false"
+              />
+              {item.key}
+            </div>
           ))}
-        </ul>
+        </div>
       </div>
+    ))}
+  </div>
 
-      <!-- sezione, perche amo quello che faccio -->
-      <div class="p-4 bg-gray-700 rounded-lg">
-        <h3 class="text-xl font-semibold text-blue-400">Perché amo quello che faccio?</h3>
-        <p class="mt-2">
-          { t('about.slogan') || "La programmazione per me è come risolvere un puzzle: ogni problema ha una soluzione, e trovare quella giusta è sempre una soddisfazione." }
-        </p>
-      </div>
-
-      <!-- sezione collab -->
-      <div class="col-span-1 md:col-span-2 text-center mt-6">
-        <p>
-          { t('about.talk_with_me.1') || "Se hai un'idea o un progetto in mente," } 
-          <a href="#contact" class="text-purple-400 hover:text-pink-400 transition-all">
-            { t('about.talk_with_me.2') || "adorerei parlarne insieme!" } 
-          </a>
-        </p>
-      </div>
+  <!-- Filosofia & CTA -->
+  <div class="text-center bg-white p-8 rounded-xl shadow-lg border border-gray-100">
+    <div class="max-w-2xl mx-auto">
+      <h3 class="text-2xl font-bold text-gray-800 mb-4">
+        {t('about.why.title') || "Perché collaborare con me?"}
+      </h3>
+      <p class="text-gray-600 mb-6">
+        {t('about.why.content') || "La programmazione per me è risolvere puzzle: cerco sempre la soluzione efficiente, pulita e scalabile. Se hai un progetto o un'idea, trasformiamoli in codice!"}
+      </p>
+      <a href="#contact" class="cta-button">
+        {t('about.cta') || "Parlamo del tuo progetto →"}
+      </a>
     </div>
   </div>
 </div>
+<!-- 
+<style>
+  .skill-item {
+    @apply flex items-center gap-2 px-3 py-2 bg-gray-50 rounded-lg border border-gray-200 text-sm font-medium text-gray-700 transition-all hover:border-purple-200 hover:bg-purple-50;
+  }
+
+  .cta-button {
+    @apply inline-flex items-center gap-2 bg-purple-600 hover:bg-purple-700 text-white px-6 py-3 rounded-lg transition-all font-semibold text-sm;
+  }
+</style> -->

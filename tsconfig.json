@@ -12,7 +12,6 @@
       
       "@servicesIMG/*": ["src/assets/img/services/*"],
       "@flags/*": ["src/assets/img/flags/*"],
-      "@skills/*": ["src/assets/img/skills/*"],
       "@we_offer/*": ["src/assets/img/we_offer/*"],
       "@weWork/*": ["src/assets/img/WeWork/*"],
       "@partner/*": ["src/assets/img/partner/*"],
@@ -21,6 +20,7 @@
       
       "@passions/*": ["src/assets/img/passions/*"],
       "@projects/*": ["src/assets/img/projects/*"],
+      "@skills/*": ["src/assets/img/skills/*"],
 
       "@components/*": ["src/components/*"],
       "@common/*": ["src/components/common/*"],
